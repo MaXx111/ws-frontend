@@ -1,12 +1,15 @@
 export default class ToolTip {
     constructor() {
-
+      this.errors = [
+        'Ужу занято :3',
+        'Псевдоним не может быть пустым так то O_o'
+      ]
     }
   
-    showTooltip(elem) {
+    showTooltip(elem, i) {
       const element = document.createElement('div');
       element.classList.add('tooltip');
-      element.textContent = 'Псевдоним не может быть пустым так то O_o';
+      element.textContent = this.errors[i];
     
       document.body.appendChild(element);
       const { right, top } = elem.getBoundingClientRect();

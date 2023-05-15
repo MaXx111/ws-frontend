@@ -38,3 +38,72 @@ body {
     padding: 5px;
     border-radius: 33px;
 }
+
+
+
+
+
+
+
+
+
+.chat__conteiner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+}
+
+.chat__wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.chat__players {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 500px;
+
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 15px 0 0 0;
+}
+
+.players_wrapper {
+
+}
+
+.chat__messages {
+
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+}   
+
+.messages__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 800px;
+    height: 800px;
+    padding: 50px;
+}
+
+.messeges__items {
+
+}
+
+.send__conteiner {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.send__btn {
+
+}
+
+.messages_input {
+
+}
