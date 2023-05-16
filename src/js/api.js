@@ -3,7 +3,8 @@ import HTMLElems from './htmlElems.js';
 export default class Api {
     constructor(apiUrl) {
       this.apiUrl = apiUrl;
-      this.htmlElems = new HTMLElems();
+      this.nickname = false;
+      this.htmlElems = new HTMLElems(this.nickname);
       this.ws = false;
     }
     
@@ -55,8 +56,9 @@ export default class Api {
       console.log(status);
     }
 
-    wsInit(conteiner) {
-        this.ws = new WebSocket('ws://localhost:7070/ws');
+    wsInit(conteiner, nickname) {
+        this.ws = new WebSocket('ws://ws-backend-0o4w.onrender.com/ws');
+        this.htmlElems = new HTMLElems(nickname)
   
         this.ws.addEventListener('open', (e) => {
             console.log(e);
@@ -66,7 +68,7 @@ export default class Api {
   
         this.ws.addEventListener('close', (e) => {
             console.log(e);
-    
+            conteiner.appendChild(this.htmlElems.htmlMessage(`выход`));
             console.log('ws close');
         });
   
@@ -80,69 +82,25 @@ export default class Api {
                 console.log(e);
               
                 const data = JSON.parse(e.data);
-                const { chat: messages } = data;
+                console.log(typeof data)
 
-                console.log(data)
-                console.log(messages)
-                
-                messages.forEach(message => {
-                    conteiner.appendChild(this.htmlElems.htmlMessage(message.toString()));
-                });
+                if(data.length === 0) return
+
+                if(data.length) {
+                    data.forEach(item => {
+                        conteiner.appendChild(this.htmlElems.htmlMessage(item));
+                    });
+                    return
+                }
+
+                conteiner.appendChild(this.htmlElems.htmlMessage(data));
                 
                 console.log('ws message');
               });
     }
 
-    sendWs(msg) {
-        this.ws.send(`${msg}`);
+    sendWs(obj) {
+        this.ws.send(JSON.stringify(obj));
     }
   }
   
-//   const ws = new WebSocket('ws://http://localhost:7070/ws');
-  
-//   const chat = document.querySelector('.chat');
-//   const chatMessage = document.querySelector('.chat-message');
-//   const chatSend = document.querySelector('.chat-send');
-  
-//   chatSend.addEventListener('click', () => {
-//     const message = chatMessage.value;
-    
-//     if (!message) return;
-    
-//     ws.send(message);
-    
-//     chatMessage.value = '';
-//   });
-  
-//   ws.addEventListener('open', (e) => {
-//     console.log(e);
-    
-//     console.log('ws open');
-//   });
-  
-//   ws.addEventListener('close', (e) => {
-//     console.log(e);
-    
-//     console.log('ws close');
-//   });
-  
-//   ws.addEventListener('error', (e) => {
-//     console.log(e);
-    
-//     console.log('ws error');
-//   });
-  
-//   ws.addEventListener('message', (e) => {
-//     console.log(e);
-  
-//     const data = JSON.parse(e.data);
-//     const { chat: messages } = data;
-    
-//     messages.forEach(message => {
-//       chat.appendChild(document.createTextNode(message) + '\n');
-//     });
-    
-//     console.log('ws message');
-//   });
-  
-//   window.api = new SubscriptionApi('http://localhost:7070/');

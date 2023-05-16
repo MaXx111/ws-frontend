@@ -92,7 +92,8 @@ body {
 }
 
 .messeges__items {
-
+    display: flex;
+    flex-direction: column;
 }
 
 .send__conteiner {
@@ -101,9 +102,32 @@ body {
 }
 
 .send__btn {
-
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
 }
 
 .messages_input {
+    display: flex;
+    width: 900px;
+    border: none;
+    border-radius: 15px;
+    background-color: beige;
+    
+}
 
+.message {
+
+}
+
+.message__title {
+
+}
+
+.message__text {
+
+}
+
+.mine {
+    text-align: end;
 }

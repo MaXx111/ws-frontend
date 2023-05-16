@@ -7,19 +7,21 @@ export default class Chat {
 
         this.nickname = false;
         this.conteiner = false;
+        this.htmlElems = false;
 
-        this.htmlElems = new HTMLElems();
-        this.api = new Api('http://localhost:7070/');
+        this.api = new Api('https://ws-backend-0o4w.onrender.com/');
 
         this.onSendBtn = this.onSendBtn.bind(this);
     }
 
     init(nickname) {
         this.nickname = nickname;
+        this.htmlElems = new HTMLElems(this.nickname);
+
         this.printChat();
         this.conteiner = this.body.querySelector('.messeges__items');
 
-        this.api.wsInit(this.conteiner);
+        this.api.wsInit(this.conteiner, this.nickname);
 
         this.addListeners();
     }
@@ -36,13 +38,16 @@ export default class Chat {
 
     onSendBtn(e) {
         e.preventDefault();
-        console.log(this.body)
 
         let input = this.body.querySelector('.messages_input');
 
         if(!input.value) return;
-        console.log(input.value)
-        this.api.sendWs(input.value);
+
+        let obj = {
+            nick: this.nickname,
+            message: input.value
+        }
+        this.api.sendWs(obj);
 
         input.value = "";
     }

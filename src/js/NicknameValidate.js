@@ -9,8 +9,9 @@ export default class NicknameValidate {
 
         this.nicknameBtn = false;
         this.nicknameInput = false;
+        this.toolTip = false;
         this.form = false;
-        this.api = new Api('http://localhost:7070/');
+        this.api = new Api('https://ws-backend-0o4w.onrender.com/');
 
         this.htmlElems = new HTMLElems();
         this.toolTip = new ToolTip();
@@ -39,7 +40,7 @@ export default class NicknameValidate {
         e.preventDefault();
         let nickname = this.nicknameInput.value;
         
-        if(nickname.length === 0 ) {
+        if(nickname.length === 0 || !this.toolTip ) {
             if(!this.isHereToolTip){
                 this.emptyToolTip()
             }

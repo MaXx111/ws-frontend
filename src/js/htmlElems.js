@@ -1,6 +1,6 @@
 export default class HTMLElems {
-    constructor() {
-
+    constructor(nickname) {
+        this.nickname = nickname;
     }
 
     nicknameForm() {
@@ -67,7 +67,6 @@ export default class HTMLElems {
 
         const msgItems = document.createElement('div');
         msgItems.className = 'messeges__items';
-        msgItems.textContent = "kjbjhvjhvj"
 
         messagesWrapper.appendChild(msgItems);
         messagesWrapper.appendChild(sendConteiner);
@@ -82,11 +81,27 @@ export default class HTMLElems {
 
     }
 
-    htmlMessage(msg) {
+    htmlMessage(obj) {
+        console.log(obj)
         const div = document.createElement('div');
-        div.textContent = msg;
-        return div;
+        div.className = 'message';
 
+        const h3 = document.createElement('h3')
+        h3.className = 'message__title';
+        h3.textContent = `${obj.nick}, ${obj.date}`;
+
+        const text = document.createElement('p');
+        text.className = 'message__text';
+        text.textContent = obj.message;
+
+        div.appendChild(h3);
+        div.appendChild(text);
+
+        if(this.nickname === obj.nick) {
+            div.classList.add('mine');
+        }
+        
+        return div;
     }
 
 }
