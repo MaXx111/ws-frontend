@@ -2,53 +2,51 @@ import HTMLElems from './htmlElems.js';
 import Api from './api.js';
 
 export default class Chat {
-    constructor(body) {
-        this.body = body
+  constructor(body) {
+    this.body = body;
 
-        this.nickname = false;
-        this.conteiner = false;
-        this.htmlElems = false;
+    this.nickname = false;
+    this.conteiner = false;
+    this.htmlElems = false;
 
-        this.api = new Api('https://ws-backend-0o4w.onrender.com/');
+    this.api = new Api('https://ws-backend-0o4w.onrender.com/');
 
-        this.onSendBtn = this.onSendBtn.bind(this);
-    }
+    this.onSendBtn = this.onSendBtn.bind(this);
+  }
 
-    init(nickname) {
-        this.nickname = nickname;
-        this.htmlElems = new HTMLElems(this.nickname);
+  init(nickname) {
+    this.nickname = nickname;
+    this.htmlElems = new HTMLElems(this.nickname);
 
-        this.printChat();
-        this.conteiner = this.body.querySelector('.messeges__items');
+    this.printChat();
+    this.conteiner = this.body.querySelector('.messeges__items');
 
-        this.api.wsInit(this.conteiner, this.nickname);
+    this.api.wsInit(this.conteiner, this.nickname);
 
-        this.addListeners();
-    }
+    this.addListeners();
+  }
 
-    printChat() {
-        this.body.appendChild(this.htmlElems.chat());
-    }
+  printChat() {
+    this.body.appendChild(this.htmlElems.chat());
+  }
 
-    addListeners() {
+  addListeners() {
+    this.body.querySelector('.send__btn').addEventListener('click', this.onSendBtn);
+  }
 
-        this.body.querySelector('.send__btn').addEventListener('click', this.onSendBtn);
+  onSendBtn(e) {
+    e.preventDefault();
 
-    }
+    const input = this.body.querySelector('.messages_input');
 
-    onSendBtn(e) {
-        e.preventDefault();
+    if (!input.value) return;
 
-        let input = this.body.querySelector('.messages_input');
+    const obj = {
+      nick: this.nickname,
+      message: input.value,
+    };
+    this.api.sendWs(obj);
 
-        if(!input.value) return;
-
-        let obj = {
-            nick: this.nickname,
-            message: input.value
-        }
-        this.api.sendWs(obj);
-
-        input.value = "";
-    }
+    input.value = '';
+  }
 }

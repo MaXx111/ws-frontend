@@ -5,8 +5,3 @@ const body = document.querySelector('body');
 const nicknameValidate = new NicknameValidate(body);
 
 nicknameValidate.init();
-
-
-
-
-
