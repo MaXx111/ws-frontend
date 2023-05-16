@@ -64,9 +64,10 @@ export default class NicknameValidate {
         this.form.remove();
         this.form = false;
       }
-    }).catch(
-      this.toolTip.showTooltip(this.nicknameInput, 0),
-    );
+    });
+    // .catch(
+    //   this.toolTip.showTooltip(this.nicknameInput, 0),
+    // );
   }
 
   emptyToolTip() {
