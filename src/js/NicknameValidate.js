@@ -1,5 +1,5 @@
 import HTMLElems from './htmlElems.js';
-import ToolTip from './toolTip.js';
+import ToolTip from './tooltip.js';
 import Chat from './chat.js';
 import Api from './api.js';
 
@@ -64,10 +64,9 @@ export default class NicknameValidate {
         this.form.remove();
         this.form = false;
       }
-    });
-    // .catch(
-    //   this.toolTip.showTooltip(this.nicknameInput, 0),
-    // );
+    }).catch(
+      this.toolTip.showTooltip(this.nicknameInput, 0),
+    );
   }
 
   emptyToolTip() {
