@@ -12,7 +12,7 @@ export default class HTMLElems {
 
     conteiner.appendChild(wrapper);
 
-    return conteiner
+    return conteiner;
   }
 
   nicknameForm() {
@@ -44,7 +44,7 @@ export default class HTMLElems {
 
   chat() {
     const conteiner = document.createElement('div');
-    conteiner.className = "conteiner__chat";
+    conteiner.className = 'conteiner__chat';
 
     const wrapper = document.createElement('div');
     wrapper.className = 'chat__wrapper';
@@ -123,7 +123,7 @@ export default class HTMLElems {
 
     if (this.nickname === nick) {
       div.classList.add('red');
-      h3.textContent = 'You'
+      h3.textContent = 'You';
     }
 
     div.appendChild(h3);

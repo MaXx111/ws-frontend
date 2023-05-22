@@ -19,7 +19,7 @@ export default class Chat {
     this.htmlElems = new HTMLElems(this.nickname);
 
     this.printChat();
-    this.api.init(nickname, this.body)
+    this.api.init(nickname, this.body);
 
     this.addListeners();
   }
@@ -30,7 +30,7 @@ export default class Chat {
 
   addListeners() {
     this.body.querySelector('.send__btn').addEventListener('click', this.onSendBtn);
-    window.addEventListener('beforeunload', this.onUnload)
+    window.addEventListener('beforeunload', this.onUnload);
   }
 
   onUnload(e) {

@@ -10,7 +10,6 @@ export default class Api {
     this.ws = false;
 
     this.wsInit = this.wsInit.bind(this);
-
   }
 
   init(nickname, body) {
@@ -18,7 +17,7 @@ export default class Api {
     this.conteinerForMsg = body.querySelector('.messeges__items');
     this.conteinerForPlayers = body.querySelector('.players_wrapper');
 
-    this.wsInit()
+    this.wsInit();
   }
 
   wsInit() {
@@ -42,34 +41,28 @@ export default class Api {
     });
 
     this.ws.addEventListener('message', (e) => {
-
       const data = JSON.parse(e.data);
-      let chat = data.chat;
-      let players = data.players;
+      const { chat } = data;
+      const { players } = data;
 
       if (chat) {
-        console.log(`chat`)
-        if(chat.length === 0) return
-        console.log(chat)
+        if (chat.length === 0) return;
         chat.forEach((item) => {
           this.conteinerForMsg.appendChild(this.htmlElems.htmlMessage(item));
         });
       }
 
       if (players) {
+        if (players.length === 0) return;
 
-        if(players.length === 0) return
+        const users = document.querySelectorAll('.player');
 
-        let users = document.querySelectorAll('.player');
-
-        users.forEach(item => item.remove());
+        users.forEach((item) => item.remove());
 
         players.forEach((item) => {
           this.conteinerForPlayers.appendChild(this.htmlElems.htmlPlayer(item));
         });
       }
-
-      console.log('ws message');
     });
   }
 
@@ -78,11 +71,10 @@ export default class Api {
   }
 
   unLoadUser(nickname) {
-    this.ws.send(JSON.stringify({type: 'unLoadPlayer', nick: nickname}));
+    this.ws.send(JSON.stringify({ type: 'unLoadPlayer', nick: nickname }));
   }
 
   async add(user) {
-    console.log(this.apiUrl);
     const request = fetch(`${this.apiUrl}players/`, {
       method: 'POST',
       headers: {
@@ -102,5 +94,4 @@ export default class Api {
 
     return status;
   }
-
 }
