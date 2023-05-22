@@ -38,19 +38,18 @@ export default class NicknameValidate {
 
   onBtnClick(e) {
     e.preventDefault();
-    const nickname = this.nicknameInput.value;
-
-    if (nickname.length === 0 || !this.toolTip) {
-      if (!this.isHereToolTip) {
-        this.emptyToolTip();
-      }
-      this.isHereToolTip = true;
-      return;
-    }
 
     if (this.isHereToolTip) {
       this.toolTip.removeTooltip();
       this.isHereToolTip = false;
+    }
+    
+    const nickname = this.nicknameInput.value;
+
+    if (nickname.length === 0) {
+      this.emptyToolTip()
+      this.isHereToolTip = true;
+      return;
     }
 
     const obj = {
@@ -59,14 +58,23 @@ export default class NicknameValidate {
 
     this.api.add(obj).then((body) => {
       if (body === 'OK') {
+
+        if (this.isHereToolTip) {
+          this.toolTip.removeTooltip();
+          this.isHereToolTip = false;
+        }
+
         this.chat.init(this.nicknameInput.value);
 
         this.form.remove();
         this.form = false;
       }
-    }).catch(
-      this.toolTip.showTooltip(this.nicknameInput, 0),
-    );
+
+      if(body === 'exists') {
+        this.toolTip.showTooltip(this.nicknameInput, 0);
+        this.isHereToolTip = true;
+      }
+    })
   }
 
   emptyToolTip() {

@@ -3,6 +3,18 @@ export default class HTMLElems {
     this.nickname = nickname;
   }
 
+  conteiner() {
+    const conteiner = document.createElement('div');
+    conteiner.className = 'conteiner';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'conteiner__wrapper';
+
+    conteiner.appendChild(wrapper);
+
+    return conteiner
+  }
+
   nicknameForm() {
     const div = document.createElement('div');
     div.className = 'nickname__conteiner';
@@ -32,7 +44,7 @@ export default class HTMLElems {
 
   chat() {
     const conteiner = document.createElement('div');
-    conteiner.className = 'chat__conteiner';
+    conteiner.className = "conteiner__chat";
 
     const wrapper = document.createElement('div');
     wrapper.className = 'chat__wrapper';
@@ -80,7 +92,6 @@ export default class HTMLElems {
   }
 
   htmlMessage(obj) {
-    console.log(obj);
     const div = document.createElement('div');
     div.className = 'message';
 
@@ -92,12 +103,30 @@ export default class HTMLElems {
     text.className = 'message__text';
     text.textContent = obj.message;
 
-    div.appendChild(h3);
-    div.appendChild(text);
-
     if (this.nickname === obj.nick) {
       div.classList.add('mine');
     }
+
+    div.appendChild(h3);
+    div.appendChild(text);
+
+    return div;
+  }
+
+  htmlPlayer(nick) {
+    const div = document.createElement('div');
+    div.className = 'player';
+
+    const h3 = document.createElement('h3');
+    h3.className = 'player__title';
+    h3.textContent = `${nick}`;
+
+    if (this.nickname === nick) {
+      div.classList.add('red');
+      h3.textContent = 'You'
+    }
+
+    div.appendChild(h3);
 
     return div;
   }

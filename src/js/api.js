@@ -4,8 +4,81 @@ export default class Api {
   constructor(apiUrl) {
     this.apiUrl = apiUrl;
     this.nickname = false;
-    this.htmlElems = new HTMLElems(this.nickname);
+    this.htmlElems = false;
+    this.conteinerForMsg = false;
+    this.conteinerForPlayers = false;
     this.ws = false;
+
+    this.wsInit = this.wsInit.bind(this);
+
+  }
+
+  init(nickname, body) {
+    this.htmlElems = new HTMLElems(nickname);
+    this.conteinerForMsg = body.querySelector('.messeges__items');
+    this.conteinerForPlayers = body.querySelector('.players_wrapper');
+
+    this.wsInit()
+  }
+
+  wsInit() {
+    this.ws = new WebSocket('wss://ws-backend-0o4w.onrender.com/messages/unread/ws');
+
+    this.ws.addEventListener('open', (e) => {
+      console.log(e);
+
+      console.log('ws open');
+    });
+
+    this.ws.addEventListener('close', (e) => {
+      console.log(e);
+      console.log('ws close');
+    });
+
+    this.ws.addEventListener('error', (e) => {
+      console.log(e);
+
+      console.log('ws error');
+    });
+
+    this.ws.addEventListener('message', (e) => {
+
+      const data = JSON.parse(e.data);
+      let chat = data.chat;
+      let players = data.players;
+
+      if (chat) {
+        console.log(`chat`)
+        if(chat.length === 0) return
+        console.log(chat)
+        chat.forEach((item) => {
+          this.conteinerForMsg.appendChild(this.htmlElems.htmlMessage(item));
+        });
+      }
+
+      if (players) {
+
+        if(players.length === 0) return
+
+        let users = document.querySelectorAll('.player');
+
+        users.forEach(item => item.remove());
+
+        players.forEach((item) => {
+          this.conteinerForPlayers.appendChild(this.htmlElems.htmlPlayer(item));
+        });
+      }
+
+      console.log('ws message');
+    });
+  }
+
+  sendWs(obj) {
+    this.ws.send(JSON.stringify(obj));
+  }
+
+  unLoadUser(nickname) {
+    this.ws.send(JSON.stringify({type: 'unLoadPlayer', nick: nickname}));
   }
 
   async add(user) {
@@ -20,7 +93,6 @@ export default class Api {
 
     const result = await request;
 
-    console.log(result);
     if (!result.ok) {
       return result;
     }
@@ -31,74 +103,4 @@ export default class Api {
     return status;
   }
 
-  async remove(user) {
-    const query = `subscriptions/${encodeURIComponent(user.phone)}`;
-
-    const request = fetch(this.apiUrl + query, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const result = await request;
-
-    if (!result.ok) {
-      console.error('Ошибка!');
-
-      return;
-    }
-
-    const json = await result.json();
-    const { status } = json;
-
-    console.log(status);
-  }
-
-  wsInit(conteiner, nickname) {
-    this.ws = new WebSocket('ws://ws-backend-0o4w.onrender.com/ws');
-    this.htmlElems = new HTMLElems(nickname);
-
-    this.ws.addEventListener('open', (e) => {
-      console.log(e);
-
-      console.log('ws open');
-    });
-
-    this.ws.addEventListener('close', (e) => {
-      console.log(e);
-      conteiner.appendChild(this.htmlElems.htmlMessage('выход'));
-      console.log('ws close');
-    });
-
-    this.ws.addEventListener('error', (e) => {
-      console.log(e);
-
-      console.log('ws error');
-    });
-
-    this.ws.addEventListener('message', (e) => {
-      console.log(e);
-
-      const data = JSON.parse(e.data);
-      console.log(typeof data);
-
-      if (data.length === 0) return;
-
-      if (data.length) {
-        data.forEach((item) => {
-          conteiner.appendChild(this.htmlElems.htmlMessage(item));
-        });
-        return;
-      }
-
-      conteiner.appendChild(this.htmlElems.htmlMessage(data));
-
-      console.log('ws message');
-    });
-  }
-
-  sendWs(obj) {
-    this.ws.send(JSON.stringify(obj));
-  }
 }
