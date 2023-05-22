@@ -1,0 +1,139 @@
+body {
+    background-color: beige;
+}
+
+.nickname__conteiner {
+    width: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+}
+
+.nickname__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.nickname__title {
+
+}
+
+.nickname__input {
+
+}
+
+.nickname__btn {
+
+}
+
+.tooltip {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid rgb(133, 102, 46);
+    padding: 5px;
+    border-radius: 33px;
+}
+
+
+
+
+
+
+
+
+
+.chat__conteiner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+}
+
+.chat__wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.chat__players {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 500px;
+
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 15px 0 0 0;
+}
+
+.players_wrapper {
+
+}
+
+.chat__messages {
+
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+}   
+
+.messages__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 800px;
+    height: 800px;
+    padding: 50px;
+}
+
+.messeges__items {
+    display: flex;
+    flex-direction: column;
+}
+
+.send__conteiner {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.send__btn {
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+}
+
+.messages_input {
+    display: flex;
+    width: 900px;
+    border: none;
+    border-radius: 15px;
+    background-color: beige;
+    
+}
+
+.message {
+
+}
+
+.message__title {
+
+}
+
+.message__text {
+
+}
+
+.mine {
+    text-align: end;
+}
+
+.red {
+    color: red;
+}
+
+/*# sourceMappingURL=main.css.map*/
